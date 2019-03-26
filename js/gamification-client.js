@@ -1,6 +1,8 @@
+var SERVER_URL = "http://localhost:8000/api";
+
 function updateLeaderBoard() {
 	$.ajax({
-		url: "http://localhost:7080/leaders"
+		url: SERVER_URL + "/leaders"
 	}).then(
 		function (data) {
 			$('#leaderboard-body').empty();
@@ -13,7 +15,7 @@ function updateLeaderBoard() {
 }
 function updateStats(userId) {
 	$.ajax({
-		url: "http://localhost:7080/stats?userId=" + userId,
+		url: SERVER_URL + "/stats?userId=" + userId,
 		success: function (data) {
 			$('#stats-div').show();
 			$('#stats-user-id').empty().append(userId);
