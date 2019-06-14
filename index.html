@@ -26,7 +26,7 @@
 				<p>
 					<form id="attempt-form">
 						<div class="form-group">
-							<label for="result-attempt">Result?</label> <input type="text" name="result-attempt" id="result-attempt" class="form-control">
+							<label for="result">Result?</label> <input type="text" name="result" id="result" class="form-control">
 						</div>
 						<div class="form-group">
 							<label for="user-alias">Your alias:</label> <input type="text" name="user-alias" id="user-alias" class="form-control">
@@ -67,16 +67,16 @@
 				<div class="text-right">
 					<button id="refresh-leaderboard" class="btn btn-default" type="submit">Refresh</button>
 				</div>
-				<div id="results-div" style="display: none;">
+				<div id="attempts-div" style="display: none;">
 					<h2>Your latest attempts</h2>
-					<table id="results" class="table">
+					<table id="attempts" class="table">
 						<tr>
 							<th>Attempt ID</th>
 							<th>Multiplication</th>
 							<th>You entered</th>
 							<th>Correct?</th>
 						</tr>
-						<tbody id="results-body"></tbody>
+						<tbody id="attempts-body"></tbody>
 					</table>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ function updateMultiplication() {
         url: SERVER_URL + "/multiplications/random"
     }).then(function (data) {
         // Cleans the form        
-        $("#attempt-form").find("input[name='result-attempt']").val("");
+        $("#attempt-form").find("input[name='result']").val("");
         $("#attempt-form").find("input[name='user-alias']").val("");
         // Gets a random challenge from API and loads the data in the HTML
         $('.multiplication-a').empty().append(data.factorA);
@@ -13,18 +13,18 @@ function updateMultiplication() {
     });
 }
 
-function updateResults(alias) {
+function updateAttempts(alias) {
     var userId = -1;
     $.ajax({
         async: false,
-        url: SERVER_URL + "/results?alias=" + alias,
+        url: SERVER_URL + "/attempts?alias=" + alias,
         success: function (data) {
-            $('#results-div').show();
-            $('#results-body').empty();
+            $('#attempts-div').show();
+            $('#attempts-body').empty();
             data.forEach(function (row) {
-                $('#results-body').append('<tr><td>' + row.id + '</td>' + '<td>' + row.multiplication.factorA + ' x '
+                $('#attempts-body').append('<tr><td>' + row.id + '</td>' + '<td>' + row.multiplication.factorA + ' x '
                     + row.multiplication.factorB + '</td>' +
-                    '<td>' + row.resultAttempt + '</td>' +
+                    '<td>' + row.result + '</td>' +
                     '<td>' + (row.correct === true ? 'YES' :
                         'NO') + '</td></tr>');
             });
@@ -43,18 +43,18 @@ $(document).ready(function () {
         var a = $('.multiplication-a').text();
         var b = $('.multiplication-b').text();
         var $form = $(this),
-            attempt = $form.find("input[name='result-attempt']").val(),
+            attempt = $form.find("input[name='result']").val(),
             userAlias = $form.find("input[name='user-alias']")
                 .val();
 
         // Compose the data in the format that the API is expecting
         var data = {
             user: { alias: userAlias }, multiplication:
-                { factorA: a, factorB: b }, resultAttempt: attempt
+                { factorA: a, factorB: b }, result: attempt
         };
         // Send the data using post
         $.ajax({
-            url: SERVER_URL + '/results',
+            url: SERVER_URL + '/attempts',
             type: 'POST',
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
@@ -72,7 +72,7 @@ $(document).ready(function () {
         });
         updateMultiplication();
         setTimeout(function () {
-            var userId = updateResults(userAlias);
+            var userId = updateAttempts(userAlias);
             updateStats(userId);
             updateLeaderBoard();
         }, 300);
